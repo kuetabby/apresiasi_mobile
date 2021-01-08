@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "669952821661",
+    "firebase_url": "https://apresiasi-auth.firebaseio.com",
+    "project_id": "apresiasi-auth",
+    "storage_bucket": "apresiasi-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669952821661:android:664aaea57220db71ae0774",
+        "android_client_info": {
+          "package_name": "com.apresiasi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669952821661-igj0rj8b6dvc5fou6acht4rspallh1p8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apresiasi",
+            "certificate_hash": "e6503d80cd4ca91389dafdd2fb0fa2456a47da38"
+          }
+        },
+        {
+          "client_id": "669952821661-c873i9n35trorerq85mngtq42o1cb59h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALLJ66tF4fOBVNajEabSbi7veUUuR8zUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669952821661-c873i9n35trorerq85mngtq42o1cb59h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "669952821661-5m5fl8jjc6danrs2mm6tvbeb8kt8k8vl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "apresiasi-auth"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
