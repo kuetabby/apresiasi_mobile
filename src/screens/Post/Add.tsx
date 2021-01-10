@@ -1,13 +1,13 @@
 import React, {useRef, useState} from 'react';
 import {useMutation} from '@apollo/client';
 
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import ImagePicker from 'react-native-image-picker';
-import {Icon, Snackbar, SnackbarRefType} from 'react-native-magnus';
+import * as ImagePicker from 'react-native-image-picker/src';
+import {Icon, Snackbar, SnackbarRef} from 'react-native-magnus';
 
 import {CREATE_POST} from 'src/queries/Post';
 
@@ -26,7 +26,7 @@ export const AddPostScreen: React.FC<Props> = () => {
   const [images, setImages] = useState('');
   const [loadingImages, setLoadingImages] = useState(false);
 
-  const snackbarRef = useRef<SnackbarRefType>(null);
+  const snackbarRef = useRef<SnackbarRef>(null);
 
   const [CreatePost, {loading: loadingUpdate}] = useMutation(CREATE_POST, {
     onCompleted: () => {
@@ -38,19 +38,18 @@ export const AddPostScreen: React.FC<Props> = () => {
   });
 
   const selectPhotoTapped = () => {
-    const options = {
-      title: 'Select Photo',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+    const options: ImagePicker.ImageLibraryOptions = {
+      quality: 1,
+      mediaType: 'photo',
     };
-    ImagePicker.showImagePicker(options, (response) => {
-      // console.log('Response = ', response);
+    ImagePicker.launchImageLibrary(options, (response) => {
+      console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        Alert.alert('You cancelled image picker');
+      } else if (response.errorMessage) {
+        console.log('ImagePicker Error: ', response.errorMessage);
+        Alert.alert(`ImagePicker Error: ${response.errorMessage}`);
       } else {
         const uri = response.uri;
         const type = response.type;
@@ -66,7 +65,7 @@ export const AddPostScreen: React.FC<Props> = () => {
   };
 
   const cloudinaryUpload = async (photo: {
-    uri: string;
+    uri: string | undefined;
     type: string | undefined;
     name: string | undefined;
   }) => {

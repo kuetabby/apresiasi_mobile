@@ -7,7 +7,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'react-native-image-picker/src';
 import {Icon, Snackbar} from 'react-native-magnus';
 
 import {UPDATE_PROFILE} from 'src/queries/MyPage';
@@ -59,19 +59,16 @@ export const EditProfileScreen: React.FC<Props> = () => {
   }, [data]);
 
   const selectPhotoTapped = () => {
-    const options = {
-      title: 'Select Photo',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+    const options: ImagePicker.ImageLibraryOptions = {
+      quality: 1,
+      mediaType: 'photo',
     };
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.launchImageLibrary(options, (response) => {
       // console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+      } else if (response.errorMessage) {
+        console.log('ImagePicker Error: ', response.errorMessage);
       } else {
         const uri = response.uri;
         const type = response.type;
@@ -87,7 +84,7 @@ export const EditProfileScreen: React.FC<Props> = () => {
   };
 
   const cloudinaryUpload = async (photo: {
-    uri: string;
+    uri: string | undefined;
     type: string | undefined;
     name: string | undefined;
   }) => {

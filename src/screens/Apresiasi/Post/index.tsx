@@ -92,7 +92,7 @@ export const ApresiasiPostScreen: React.FC<Props> = () => {
                 <Image
                   h={'45%'}
                   w={'100%'}
-                  resizeMode="stretch"
+                  resizeMode="contain"
                   source={{
                     uri: item.post_img,
                   }}

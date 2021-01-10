@@ -6,8 +6,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import ImagePicker from 'react-native-image-picker';
-import {Icon, Snackbar, SnackbarRefType, Text} from 'react-native-magnus';
+import * as ImagePicker from 'react-native-image-picker/src';
+import {Icon, Snackbar, SnackbarRef, Text} from 'react-native-magnus';
 
 import {PostForm} from 'src/components/form/PostForm';
 import {SubHeader} from 'src/components/header/SubHeader';
@@ -51,7 +51,7 @@ export const EditPostScreen: React.FC<Props> = () => {
   const [images, setImages] = useState('');
   const [loadingImages, setLoadingImages] = useState(false);
 
-  const snackbarRef = useRef<SnackbarRefType>(null);
+  const snackbarRef = useRef<SnackbarRef>(null);
 
   useEffect(() => {
     const data: Posts = post_data && post_data.getPostById;
@@ -65,19 +65,16 @@ export const EditPostScreen: React.FC<Props> = () => {
   }, [post_data]);
 
   const selectPhotoTapped = () => {
-    const options = {
-      title: 'Select Photo',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+    const options: ImagePicker.ImageLibraryOptions = {
+      quality: 1,
+      mediaType: 'photo',
     };
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.launchImageLibrary(options, (response) => {
       // console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+      } else if (response.errorMessage) {
+        console.log('ImagePicker Error: ', response.errorMessage);
       } else {
         const uri = response.uri;
         const type = response.type;
@@ -93,7 +90,7 @@ export const EditPostScreen: React.FC<Props> = () => {
   };
 
   const cloudinaryUpload = async (photo: {
-    uri: string;
+    uri: string | undefined;
     type: string | undefined;
     name: string | undefined;
   }) => {

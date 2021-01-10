@@ -14,7 +14,7 @@ import {
   Icon,
   Image,
   Snackbar,
-  SnackbarRefType,
+  SnackbarRef,
   Text,
 } from 'react-native-magnus';
 import {
@@ -33,7 +33,7 @@ export const PostList: React.FC<Props> = () => {
   const navigation = useNavigation();
   const {signOut} = useContext(AuthContext);
 
-  const snackbarRef = useRef<SnackbarRefType>(null);
+  const snackbarRef = useRef<SnackbarRef>(null);
 
   const {loading, error, data, refetch} = useQuery(GET_POST);
 

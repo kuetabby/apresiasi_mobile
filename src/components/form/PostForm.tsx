@@ -63,7 +63,7 @@ export const PostForm: React.FC<Props> = ({
       </TouchableOpacity>
 
       {loadingImages ? (
-        <Div justifyContent="center">
+        <Div justifyContent="center" alignItems="center" h={100}>
           <ActivityIndicator
             color="#be1e2d"
             size={25}

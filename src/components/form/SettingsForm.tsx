@@ -2,7 +2,7 @@ import {Picker} from '@react-native-picker/picker';
 import React from 'react';
 
 import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native';
-import {Avatar, Button, Div, Input} from 'react-native-magnus';
+import {Avatar, Button, Div, Input, Text} from 'react-native-magnus';
 
 interface Props {
   name: string;
@@ -32,25 +32,31 @@ export const SettingsForm: React.FC<Props> = ({
   return (
     <Div m={10} justifyContent="center" alignItems="center">
       <TouchableOpacity onPress={() => onSelectPhotoTapped()}>
-        <Avatar
-          size={120}
-          m={10}
-          bg="gray400"
-          color="blue500"
-          rounded="circle"
-          source={
-            Boolean(images)
-              ? {
-                  uri: String(images),
-                }
-              : 0
-          }>
-          {loadingImages ? (
-            <ActivityIndicator color="#be1e2d" size={25} />
-          ) : (
-            'Ava'
-          )}
-        </Avatar>
+        {loadingImages ? (
+          <Div justifyContent="center" alignItems="center" h={100}>
+            <ActivityIndicator
+              color="#be1e2d"
+              size={25}
+              style={{height: 100, width: 100}}
+            />
+          </Div>
+        ) : (
+          <Avatar
+            size={120}
+            m={10}
+            bg="gray400"
+            color="blue500"
+            rounded="circle"
+            source={
+              Boolean(images)
+                ? {
+                    uri: String(images),
+                  }
+                : 0
+            }>
+            <Text>Ava</Text>
+          </Avatar>
+        )}
       </TouchableOpacity>
 
       <Input
@@ -64,10 +70,10 @@ export const SettingsForm: React.FC<Props> = ({
         autoFocus={true}
       />
 
-      <Div w="100%" borderWidth={1} borderColor="gray200" rounded={5}>
+      <Div w="100%" rounded={5}>
         <Picker
           selectedValue={String(gender)}
-          style={{height: 50, width: '100%'}}
+          style={{height: 50, marginHorizontal: 15}}
           onValueChange={(itemValue, itemIndex) =>
             onChangeState(String(itemValue), 'gender')
           }>
@@ -103,7 +109,7 @@ export const SettingsForm: React.FC<Props> = ({
         my={5}
         w="100%"
         fontSize={'lg'}
-        disabled={loadingSubmit}
+        disabled={loadingSubmit || loadingImages}
         onPress={onSubmit}>
         Simpan
       </Button>

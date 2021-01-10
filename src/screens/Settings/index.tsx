@@ -7,8 +7,8 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import {Div, Icon, Snackbar, SnackbarRefType, Text} from 'react-native-magnus';
-import ImagePicker from 'react-native-image-picker';
+import {Div, Icon, Snackbar, SnackbarRef, Text} from 'react-native-magnus';
+import * as ImagePicker from 'react-native-image-picker/src';
 
 import {BasicHeader} from 'src/components/header/BasicHeader';
 import {SettingsForm} from 'src/components/form/SettingsForm';
@@ -36,7 +36,7 @@ const Settings: React.FC<Props> = () => {
 
   const {signOut} = useContext(AuthContext);
 
-  const snackbarRef = useRef<SnackbarRefType>(null);
+  const snackbarRef = useRef<SnackbarRef>(null);
 
   const {
     loading: user_loading,
@@ -69,19 +69,16 @@ const Settings: React.FC<Props> = () => {
   }, [user_data]);
 
   const selectPhotoTapped = () => {
-    const options = {
-      title: 'Select Photo',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+    const options: ImagePicker.ImageLibraryOptions = {
+      quality: 1,
+      mediaType: 'photo',
     };
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.launchImageLibrary(options, (response) => {
       // console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+      } else if (response.errorMessage) {
+        console.log('ImagePicker Error: ', response.errorMessage);
       } else {
         const uri = response.uri;
         const type = response.type;
@@ -97,7 +94,7 @@ const Settings: React.FC<Props> = () => {
   };
 
   const cloudinaryUpload = async (photo: {
-    uri: string;
+    uri: string | undefined;
     type: string | undefined;
     name: string | undefined;
   }) => {
@@ -191,7 +188,7 @@ const Settings: React.FC<Props> = () => {
         ref={snackbarRef}
         bg="green700"
         color="white"
-        duration={2000}>
+        duration={3000}>
         Updated!
       </Snackbar>
     </Div>
