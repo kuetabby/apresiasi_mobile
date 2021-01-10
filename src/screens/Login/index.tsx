@@ -43,7 +43,7 @@ const Login: React.FC<Props> = () => {
         }
         setTimeout(() => {
           currentCount = 0;
-        }, 1500);
+        }, 2000);
 
         return true;
       };
