@@ -62,6 +62,10 @@ interface Props {}
 const Routes = () => {
   const {state} = useContext(AuthContext);
 
+  if (state.isLoading) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <Navigator>
